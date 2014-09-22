@@ -27,14 +27,15 @@ define(function(require, exports, module) {
         events: {
             'click [data-role=next-lesson]': 'onNextLesson',
             'click [data-role=prev-lesson]': 'onPrevLesson',
-            'click [data-role=finish-lesson]': 'onFinishLesson'
+            'click [data-role=finish-lesson]': 'onFinishLesson',
+            'click [data-role=demo-lesson]': 'onDemoLesson',
         },
 
         attrs: {
             courseId: null,
             courseUri: null,
             dashboardUri: null,
-            lessonId: null
+            lessonId: null,
         },
 
         setup: function() {
@@ -68,6 +69,23 @@ define(function(require, exports, module) {
                 this._onFinishLearnLesson();
             }
         },
+       //测试
+       onDemoLesson: function(e) {
+         var getSwf = function (movieName) {
+           if (window.document[movieName]) {
+             return window.document[movieName];
+           } else if (navigator.appName.indexOf("Microsoft") == -1) {
+             if (document.embeds && document.embeds[movieName]) {
+               return document.embeds[movieName];
+             }
+           } else {
+             return document.getElementById(movieName);
+           }
+         };
+         //alert('fdsfds');
+         var player = getSwf('cc_67493A8ECE737FFE9C33DC5901307461');
+         player.start();
+       },
 
         _startLesson: function() {
             var toolbar = this._toolbar,
@@ -116,7 +134,8 @@ define(function(require, exports, module) {
         _initToolbar: function() {
             this._toolbar = new Toolbar({
                 element: '#lesson-dashboard-toolbar',
-                activePlugins: ['lesson', 'question', 'note', 'material'],
+                //activePlugins: ['lesson', 'question', 'note', 'material'],
+                activePlugins: ['lesson', 'question'],//只显示问答和目录
                 courseId: this.get('courseId')
             }).render();
 
@@ -276,7 +295,18 @@ define(function(require, exports, module) {
 
                             that.set('videoPlayer', player);
 
-                        } else {
+                        } else if(lesson.mediaSource == 'bokecc') {
+
+                          var swfStr = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="600" height="490" id="cc_'+ lesson.mediaExtendId+ '">';
+                          swfStr += '<param name="movie" value="' + lesson.mediaUri+'" /><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" />';
+                          swfStr += '<embed src="' + lesson.mediaUri+ '" width="600" height="490" name="cc_67493A8ECE737FFE9C33DC5901307461" allowFullScreen="true" allowScriptAccess="always" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"/></object>';
+                            $("#lesson-swf-content").html('<div id="lesson-swf-player"></div>');
+                          /*  swfobject.embedSWF(lesson.mediaUri, 
+                                'lesson-swf-player', '100%', '100%', "9.0.0", null, attributes, 
+                                {wmode:'opaque',allowFullScreen:'true'});*/
+                          $("#lesson-swf-player").html(swfStr);
+                            $("#lesson-swf-content").show();
+                        }else {
                             $("#lesson-swf-content").html('<div id="lesson-swf-player"></div>');
                             swfobject.embedSWF(lesson.mediaUri, 
                                 'lesson-swf-player', '100%', '100%', "9.0.0", null, null, 
