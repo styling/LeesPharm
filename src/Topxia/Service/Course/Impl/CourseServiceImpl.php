@@ -736,6 +736,16 @@ class CourseServiceImpl extends BaseService implements CourseService
 				$lesson['mediaName'] = $media['name'];
 				$lesson['mediaSource'] = $media['source'];
 				$lesson['mediaUri'] = $media['uri'];
+                //处理CC视频的ID
+                if($media['source'] == 'bokecc') {
+                    $url = $media['uri'];
+                    $url = substr($url,strpos($url, 'single'));
+                    //拆分Url
+                    $matches = explode('/',$url);
+                    //获取视频ID
+                    $videoId = explode('_',$matches[1])[1];
+                    $lesson['mediaExtendId'] = $videoId;
+                }
 			}
 		} elseif ($lesson['type'] == 'testpaper') {
 			$lesson['mediaId'] = $lesson['mediaId'];
