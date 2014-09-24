@@ -50,6 +50,15 @@
             </div>
           </div>
           {% endif %}
+
+          {% if course.type == 'normal' %}
+          <div class="list-group-panel">
+            <div class="list-group-heading">视频中间题库</div>
+            <div class="list-group">
+              <a class="list-group-item {% if side_nav == 'middleQuestion' %}active{% endif %}" href="{{ path('course_manage_question', {courseId:course.id}) }}">题目管理</a>
+            </div>
+          </div>
+          {% endif %}
         </div>
 
       </div>

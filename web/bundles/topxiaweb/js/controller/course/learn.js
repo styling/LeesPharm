@@ -83,6 +83,7 @@ define(function(require, exports, module) {
            }
          };
          //alert('fdsfds');
+//         alert(this._lessons);
          var player = getSwf('cc_67493A8ECE737FFE9C33DC5901307461');
          player.start();
        },

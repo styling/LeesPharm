@@ -13,7 +13,7 @@ class CourseQuestionManageController extends BaseController
     public function indexAction(Request $request, $courseId)
     {
         $course = $this->getCourseService()->tryManageCourse($courseId);
-        
+
         $conditions = $request->query->all();
 
         if (empty($conditions['target'])) {
