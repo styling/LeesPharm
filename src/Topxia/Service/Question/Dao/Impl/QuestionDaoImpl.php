@@ -126,6 +126,7 @@ class QuestionDaoImpl extends BaseDao implements QuestionDao
             return true;
         });
 
+
         if (isset($conditions['targetPrefix'])) {
             $conditions['targetLike'] = "{$conditions['targetPrefix']}/%";
             unset($conditions['target']);
@@ -137,6 +138,7 @@ class QuestionDaoImpl extends BaseDao implements QuestionDao
 
         $builder = $this->createDynamicQueryBuilder($conditions)
             ->from($this->table, 'questions');
+
 
 
         if (isset($conditions['targets']) and is_array($conditions['targets'])) {
@@ -160,7 +162,8 @@ class QuestionDaoImpl extends BaseDao implements QuestionDao
 
         $builder->andWhere('parentId = :parentId')
             ->andWhere('type = :type')
-            ->andWhere('stem LIKE :stem');
+                ->andWhere('stem LIKE :stem');
+
 
         if (isset($conditions['excludeIds']) and is_array($conditions['excludeIds'])) {
             $excludeIds = array();
@@ -172,6 +175,14 @@ class QuestionDaoImpl extends BaseDao implements QuestionDao
                 $builder->andStaticWhere("id NOT IN (" . implode(',', $excludeIds) . ")");
             }
         }
+        //设置默认值
+        if (!isset($conditions['isMiddle']))
+            $conditions['isMiddle'] = 'no';
+
+        if ($conditions['isMiddle'] == 'no' || $conditions['isMiddle'] == 'yes') {
+            $builder->andStaticWhere("isMiddle = '$conditions[isMiddle]'");//默认使用试题为非中间题
+        }
+
 
         return $builder;
     }

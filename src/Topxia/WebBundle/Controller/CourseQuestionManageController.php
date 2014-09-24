@@ -23,6 +23,8 @@ class CourseQuestionManageController extends BaseController
         if (!empty($conditions['keyword'])) {
             $conditions['stem'] = $conditions['keyword'];
         }
+        //现实所有的题目包括设置为中间题的题目
+        $conditions['isMiddle'] = 'all';
 
         if (!empty($conditions['parentId'])) {
 
