@@ -168,6 +168,23 @@ class TestpaperController extends BaseController
         ));
     }
 
+    public function middleQuestionShowAction(Request $request, $target)
+    {
+        $conditions['target'] = 'course-1/lesson-1';
+        $conditions['isMiddle'] = 'yes';
+
+        $total = $this->getQuestionService()->searchQuestionsCount($conditions);
+
+        $questions = $this->getQuestionService()->searchQuestions($conditions, array('createdTime', 'DESC'), 0, $total);
+
+        $questions = ArrayToolkit::index($questions, 'id');
+
+
+        return $this->render('TopxiaWebBundle:QuizQuestionTest:middle-question-show.html.twig', array(
+            'questions' => $questions
+        ));
+    }
+
     public function showTestAction (Request $request, $id)
     {
         $testpaperResult = $this->getTestpaperService()->getTestpaperResult($id);
