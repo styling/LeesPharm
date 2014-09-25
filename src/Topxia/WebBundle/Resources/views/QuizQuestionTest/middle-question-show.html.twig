@@ -1,3 +1,4 @@
+<form action="{{ path('course_manage_finish_middle_question', {'target':'wangxiaoguang'}) }}" method="post">
 <div class="panel-body">
   {% for item in questions %}
   <div class="testpaper-question testpaper-question-choice" id="question{{ item.id }}">
@@ -21,7 +22,7 @@
         {% set choiceIndex = (65+key)|chr %}
 
         <label class="{% if item.type == 'single_choice' %}radio{% else %}checkbox{% endif %}-inline">
-          <input type="{% if item.type == 'single_choice' %}radio{% else %}checkbox{% endif %}" data-type="choice" name="{{ item.id }}" value="{{ key }}" />
+          <input type="{% if item.type == 'single_choice' %}radio{% else %}checkbox{% endif %}" data-type="choice" name="{{ item.id }}[]" value="{{ key }}" />
           {{ choiceIndex }}
         </label>
         {% endfor %}
@@ -30,3 +31,6 @@
   </div>
   {% endfor %}
 </div>
+<input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+<input type="submit" value="提交" />
+</form>

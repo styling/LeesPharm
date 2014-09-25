@@ -167,8 +167,8 @@ class TestpaperController extends BaseController
             'total' => $total
         ));
     }
-
-    public function middleQuestionShowAction(Request $request, $target)
+    //显示中间题
+    public function showMiddleQuestionAction(Request $request, $target)
     {
         $conditions['target'] = 'course-1/lesson-1';
         $conditions['isMiddle'] = 'yes';
@@ -183,6 +183,41 @@ class TestpaperController extends BaseController
         return $this->render('TopxiaWebBundle:QuizQuestionTest:middle-question-show.html.twig', array(
             'questions' => $questions
         ));
+    }
+    //处理中间题
+    public function finishMiddleQuestionAction(Request $request, $target)
+    {
+        if ($request->getMethod() == 'POST') {
+            //原始答案
+            $originAnswers = $request->request->all();
+            $user = $this->getCurrentUser();
+
+            //计算答案的错对
+            $answers = $this->getQuestionService()->judgeQuestions($originAnswers, true);
+
+            $status = array();
+            foreach ($originAnswers as $questionId => $answer) {
+
+                $answerNew['status'] = $answers[$questionId]['status'];
+                $answerNew['userId'] = $user->id;
+                $answerNew['questionId'] = $questionId;
+                $answerNew['answer'] = $answer;
+                $answerNew['target'] = 'course-1/lesson-1';
+
+                if (in_array($answers[$question]['status'], array('wrong', 'noAnswer', 'notFound'))) {
+                    $status[] = $questionId;
+                }
+
+                $this->getTestpaperItemResultDao()->addItemResult($answerNew);
+            }
+            //如果答错的题在该部分写错误逻辑
+            if (empty($status))
+                echo 'sucess';
+            else
+                echo 'errors';
+
+            exit;
+        }
     }
 
     public function showTestAction (Request $request, $id)
@@ -646,6 +681,10 @@ class TestpaperController extends BaseController
     private function getNotificationService()
     {
         return $this->getServiceKernel()->createService('User.NotificationService');
+    }
+
+    private function getTestpaperItemResultDao(){
+        return $this->getServiceKernel()->createDao('Testpaper.TestpaperItemResultDao');
     }
 
 }

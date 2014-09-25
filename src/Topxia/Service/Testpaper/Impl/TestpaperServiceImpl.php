@@ -278,7 +278,7 @@ class TestpaperServiceImpl extends BaseService implements TestpaperService
     {
         $items = $this->getTestpaperItems($testpaperId);
         $items = ArrayToolkit::index($items, 'questionId');
-
+//        print_r($items);exit;
         $questions = $this->getQuestionService()->findQuestionsByIds(ArrayToolkit::column($items, 'questionId'));
         $questions = ArrayToolkit::index($questions, 'id');
 
