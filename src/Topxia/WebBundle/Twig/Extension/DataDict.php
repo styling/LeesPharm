@@ -190,14 +190,15 @@ class DataDict
 			'qq' => 'QQ登录',
 			'douban' => '豆瓣连接'
 		),
+        //先注视掉不使用的部分
 		'questionType' => array(
 	    	'single_choice' => '单选题',
 	    	'choice' => '多选题',
             'uncertain_choice' => '不定项选择题',
-	    	'fill' => '填空题',
+//	    	'fill' => '填空题',
 	    	'determine' => '判断题',
-	    	'essay' => '问答题',
-	    	'material' => '材料题',
+//	    	'essay' => '问答题',
+//	    	'material' => '材料题',
         ),
         'difficulty' => array(
 	    	'simple' => '简单',

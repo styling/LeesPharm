@@ -638,6 +638,14 @@ course_manage_show_test:
     pattern: /test/{id}/show
     defaults: { _controller: TopxiaWebBundle:Testpaper:showTest }
 
+course_manage_show_middle_question:
+    pattern: /test/middle-question/{target}
+    defaults: { _controller: TopxiaWebBundle:Testpaper:showMiddleQuestion }
+
+course_manage_finish_middle_question:
+    pattern: /test/finish-middle-question/{target}
+    defaults: { _controller: TopxiaWebBundle:Testpaper:finishMiddleQuestion }
+
 course_manage_preview_test:
     pattern: /test/{testId}/preview
     defaults: { _controller: TopxiaWebBundle:Testpaper:previewTest }

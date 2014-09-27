@@ -120,7 +120,7 @@ class CourseLessonController extends BaseController
     {
         list($course, $member) = $this->getCourseService()->tryTakeCourse($courseId);
 
-        $lesson = $this->getCourseService()->getCourseLesson($courseId, $lessonId);
+        $lesson = $this->getCourseService()->getCourseLesson($courseId, $lessonId);//print_r($lesson);exit;
         $json = array();
         $json['number'] = $lesson['number'];
 

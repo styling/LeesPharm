@@ -1,0 +1,36 @@
+<form action="{{ path('course_manage_finish_middle_question', {'target':'wangxiaoguang'}) }}" method="post">
+<div class="panel-body">
+  {% for item in questions %}
+  <div class="testpaper-question testpaper-question-choice" id="question{{ item.id }}">
+    <div class="testpaper-question-body">
+      <div class="testpaper-question-stem-wrap clearfix">
+        <div class="testpaper-question-stem">{{ item.stem|bbCode2Html|raw }}</div>
+      </div><!--提干-->
+
+      <ul class="testpaper-question-choices">
+        {% for key, choice in item.metas.choices %}
+        {% set choiceIndex = (65+key)|chr %}
+        <li><span class="testpaper-question-choice-index">{{ choiceIndex }}.</span> {{ choice|bbCode2Html|raw }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="testpaper-question-footer clearfix">
+
+      <div class="testpaper-question-choice-inputs">
+        {% for key, choice in item.metas.choices %}
+        {% set choiceIndex = (65+key)|chr %}
+
+        <label class="{% if item.type == 'single_choice' %}radio{% else %}checkbox{% endif %}-inline">
+          <input type="{% if item.type == 'single_choice' %}radio{% else %}checkbox{% endif %}" data-type="choice" name="{{ item.id }}[]" value="{{ key }}" />
+          {{ choiceIndex }}
+        </label>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+<input type="submit" value="提交" />
+</form>

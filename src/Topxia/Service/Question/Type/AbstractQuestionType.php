@@ -36,6 +36,8 @@ abstract class AbstractQuestionType extends BaseService
         $filtered['score'] = empty($fields['score'])? 0 : $fields['score'];
         $filtered['categoryId'] = empty($fields['categoryId']) ? 0 : (int) $fields['categoryId'];
         $filtered['parentId'] = empty($fields['parentId']) ? 0 : (int)$fields['parentId'];
+        //新增区分课程中间题字段
+        $filtered['isMiddle'] = empty($fields['isMiddle']) ? 'no' : $fields['isMiddle'];
         if ($mode == 'update') {
             unset($filtered['parentId']);
         }

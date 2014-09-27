@@ -15,6 +15,7 @@
   <td>
   {{ dict('questionType')[question.type] }}
   {% if question.type == 'material'%}<br><small class="text-muted">({{ question.subCount }}子题)</small>{% endif %}
+  {% if question.isMiddle == 'yes'%}<br/><small class="text-muted">(中间题)</small>{% endif %}
   </td>
   <td>
     {{ macro.user_link(users[question.userId]) }}
