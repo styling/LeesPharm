@@ -215,7 +215,7 @@ class CourseController extends BaseController
 		$weeks = array("日","一","二","三","四","五","六");
 
 		$currentTime = time();
- 
+
 		if (empty($course)) {
 			throw $this->createNotFoundException();
 		}
