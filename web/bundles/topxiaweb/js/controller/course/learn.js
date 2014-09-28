@@ -82,7 +82,7 @@ define(function(require, exports, module) {
              return document.getElementById(movieName);
            }
          };
-         //alert('fdsfds');
+         console.log(this._toolbar.get('lesson'));
 //         alert(this._lessons);
          var player = getSwf('cc_67493A8ECE737FFE9C33DC5901307461');
          player.start();
@@ -155,7 +155,7 @@ define(function(require, exports, module) {
                 }
             });
 
-            this._router = new DashboardRouter();
+            this._router = new DashboardRouter();//console.log(this.get('dashboardUri'));
             Backbone.history.start({pushState: false, root:this.get('dashboardUri')} );
         },
 

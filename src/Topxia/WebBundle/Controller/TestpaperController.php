@@ -204,7 +204,7 @@ class TestpaperController extends BaseController
                 $answerNew['answer'] = $answer;
                 $answerNew['target'] = 'course-1/lesson-1';
 
-                if (in_array($answers[$question]['status'], array('wrong', 'noAnswer', 'notFound'))) {
+                if (in_array($answers[$questionId]['status'], array('wrong', 'noAnswer', 'notFound'))) {
                     $status[] = $questionId;
                 }
 
